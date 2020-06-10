@@ -1,4 +1,6 @@
 from room import Room
+from player import Player
+
 
 # Declare all the rooms
 
@@ -50,4 +52,49 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
+darren = Player(room['outside'])
+current_room = room['outside']
+print(current_room)
+ 
+quit = False
 
+
+while quit is False:
+    print(f'Current Room: {darren.current_room}')
+    print(f'Description: {current_room.description}')
+
+    if current_room.name == 'Treasure Chamber':
+        print('***** YOU HAVE FOUND THE TRESURE ROOM *****')
+
+    command = input(
+        '\n\nWhat is you next move? \n(E)xplore Current Room\n(G)o to new Room\n(Q)uit\n\n\n')
+    if command == '':
+        continue
+    command = command.strip().lower()[0]
+    if command == 'q':
+        quit = True
+    elif command == 'e':
+        if not current_room.name:
+            print('You will be able to find items in this room in the next update but not now cheater!!!!!!!!!')
+    elif command == 'g':
+        direction = input('\nWhich Direction whould you like to go?\n(n)orth\n(e)ast\n(s)outh\n(w)est\n(q)uit\n\n\n')
+        while direction not in ('n', 's', 'e', 'w', 'q'):
+            print('\n********* Please choose a valid direction, I made it easy look on the screen...... forget you lost!! \nJK keep going!')
+            direction = input('\n Which Direction would you like to g?\n(n)orth\n(e)ast\n(s)outh\n(w)est\n(q)uit\n\n\n')
+        if direction == 'q':
+            quit = True
+            continue
+        direction = direction.strip().lower()[0] + '_to'
+        print(f'Alright. we are going {direction}.')
+
+        other_room = getattr(current_room, direction)
+        
+        if other_room is None:
+            print("a room doesn't exist in that direction")
+        else:
+            current_room = darren.current_room = other_room
+            print(f"darren's current room: {darren.current_room}")
+    
+    
+
+        
